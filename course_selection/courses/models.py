@@ -23,12 +23,17 @@ class Instructor(models.Model):
 
 class Course(models.Model):
     id = models.AutoField(primary_key=True)
+    code = models.CharField(null=True, max_length=100, blank=True)
     name = models.CharField(max_length=100)
     credits = models.IntegerField()
     classDays = models.CharField(max_length=20, choices=WEEKDAY_CHOICES, null=True)  # Stores "Sunday/Tuesday", etc.
     startTime = models.TimeField(null=True)  
     endTime = models.TimeField(null=True)    
-    examDate = jmodels.jDateTimeField(null=True)     # Solar Hijri (Jalali) Exam Date
+
+    # Separate Jalali Date and Time
+    examDate = jmodels.jDateField(null=True, verbose_name="Exam Date (Jalali)")  # Jalali Date ONLY
+    examTime = models.TimeField(null=True, verbose_name="Exam Time")  # Time ONLY
+
     capacity = models.IntegerField()
     remainingCapacity = models.IntegerField()
 

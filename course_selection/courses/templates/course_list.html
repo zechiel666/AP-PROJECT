@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course List</title>
+</head>
+<body>
+<div class="container">
+    <h2>لیست دروس و انتخاب واحد</h2>
+
+    <!-- Search & Filter Section -->
+    <div class="filters">
+        <input type="text" id="searchInput" placeholder="جستجو بر اساس کد یا نام درس...">
+        <select id="departmentFilter">
+            <option value="">همه‌ی گروه‌ها</option>
+            {% for department in departments %}
+                <option value="{{ department.name }}">{{ department.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Course Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>کد درس</th>
+                <th>عنوان درس</th>
+                <th>واحد</th>
+                <th>زمان کلاس</th>
+                <th>زمان امتحان</th>
+                <th>مدرس</th>
+                <th>ظرفیت</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="courseTable">
+            {% for course in courses %}
+            <tr data-code="{{ course.code }}" data-name="{{ course.name }}" data-department="{{ course.department.name }}">
+                <td>{{ course.code }}</td>
+                <td>{{ course.name }}</td>
+                <td>{{ course.credits }}</td>
+                <td><div>{{ course.classDays }}</div><div>{{ course.startTime }} - {{ course.endTime }}</div></td>
+                <td>{{ course.examDate }} / {{ course.examTime }}</td>
+                <td>{{ course.instructor.name }}</td>
+                <td>{{ course.capacity }} / {{ course.remainingCapacity }}</td>
+                <td><button class="add-btn">افزودن</button></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8" style="text-align:center;">No courses available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    //functionality for search
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById("searchInput");
+        const departmentFilter = document.getElementById("departmentFilter");
+        const courseTable = document.getElementById("courseTable");
+
+        function filterCourses() {
+            let searchValue = searchInput.value.toLowerCase();
+            let selectedDepartment = departmentFilter.value;
+
+            document.querySelectorAll("#courseTable tr").forEach(row => {
+                let code = row.getAttribute("data-code").toLowerCase();
+                let name = row.getAttribute("data-name").toLowerCase();
+                let department = row.getAttribute("data-department");
+
+                let matchesSearch = code.includes(searchValue) || name.includes(searchValue);
+                let matchesDepartment = (selectedDepartment === "" || department === selectedDepartment);
+
+                if (matchesSearch && matchesDepartment) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        searchInput.addEventListener("input", filterCourses);
+        departmentFilter.addEventListener("change", filterCourses);
+    });
+    //functionality for add button ******
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".add-btn").forEach(button => {
+            button.addEventListener("click", function() {
+                let courseId = this.getAttribute("data-course-id");
+                alert("Course " + courseId + " added! (Functionality to be implemented)");
+            });
+        });
+    });
+</script>
+</body>
+</html>
