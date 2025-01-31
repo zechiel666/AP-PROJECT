@@ -1,14 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Register</title>
-</head>
-<body>
-    <h2>Register</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Sign Up</button>
-    </form>
-</body>
-</html>
+{% extends 'user/base.html' %}
+
+{% block title %}ثبت نام{% endblock %}
+
+{% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'user/register.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="form">
+        <div class="title">ثبت نام</div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="input-container">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="submit">ثبت نام</button>
+        </form>
+    </div>
+{% endblock %}
+

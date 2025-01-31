@@ -1,0 +1,113 @@
+/* General body styling */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #3b6cdf;
+    font-family: 'Arial', sans-serif;
+    color: white;
+    padding: 20px;
+}
+
+/* Heading */
+h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+/* Search & filter section */
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 10px;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.search input, .search select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+.search input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.search select {
+    width: 180px;
+}
+
+/* Table Container */
+.container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    max-width: 900px;
+    padding: 20px;
+    text-align: center;
+    margin: 20px auto;
+    color: #1521ff;
+    overflow-x: auto;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+thead {
+    background: #1521ff;
+    color: white;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+tbody tr:hover {
+    background: rgba(21, 33, 255, 0.1);
+}
+
+/* Button */
+.add-btn {
+    background-color: #7f2199;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.add-btn:hover {
+    background-color: #1521ff;
+    transform: scale(1.05);
+}
+
+.add-btn:active {
+    background-color: #2f8ede;
+    transform: scale(1);
+}

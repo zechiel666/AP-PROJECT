@@ -3,13 +3,34 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import *
 
 class UserCreationForm(UserCreationForm):
-    name = forms.CharField(max_length=100)
-    national_id = forms.CharField(max_length=10)
-    student_number = forms.CharField(max_length=15) 
-    email = forms.EmailField()
-    phone_number = forms.CharField(max_length=15)
-    user_level = forms.ChoiceField(choices=User.USER_LEVEL_CHOICES)
+    name = forms.CharField(max_length=100, label='نام و نام خانوادگی')
+    national_id = forms.CharField(max_length=10, label='کدملی')
+    student_number = forms.CharField(max_length=15, label='شماره دانشجویی') 
+    email = forms.EmailField(label='ایمیل')
+    phone_number = forms.CharField(max_length=15, label='شماره تلفن')
+    user_level = forms.ChoiceField(choices=User.USER_LEVEL_CHOICES, label='سطح کاربری')
+    
 
+    password1 = forms.CharField(
+        label="رمز عبور",
+        widget=forms.PasswordInput(),
+        help_text="رمز عبور باید حداقل ۸ کاراکتر داشته باشد و شامل اطلاعات شخصی نباشد.",
+        error_messages={
+            "required": "لطفاً رمز عبور خود را وارد کنید.",
+            "password_too_short": "رمز عبور باید حداقل ۸ کاراکتر داشته باشد.",
+            "password_too_common": "رمز عبور نمی‌تواند یک رمز عبور رایج باشد.",
+            "password_entirely_numeric": "رمز عبور نمی‌تواند فقط عدد باشد.",
+        }
+    )
+
+    password2 = forms.CharField(
+        label="تکرار رمز عبور",
+        widget=forms.PasswordInput(),
+        help_text="رمز عبور را دوباره وارد کنید.",
+        error_messages={
+            "required": "لطفاً تکرار رمز عبور خود را وارد کنید.",
+        }
+    )
     class Meta:
         model = User
         fields = ['name', 'national_id', 'student_number', 'email', 'phone_number', 'user_level', 'password1', 'password2']

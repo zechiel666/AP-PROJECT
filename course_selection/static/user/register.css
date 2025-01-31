@@ -1,0 +1,103 @@
+/* Center the page content */
+body {
+    direction: rtl;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Full height of the viewport */
+    margin: 0;
+    background-color: #3b6cdf;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    flex-direction: column; /* Stack items vertically */
+}
+
+/* Title styling */
+.title {
+    color: #1521ff;
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+/* Form container */
+.form {
+    direction: rtl;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    width: 400px;
+    padding: 25px;
+    text-align: center;
+}
+
+/* Input container */
+.input-container {
+    margin-bottom: 20px; /* Space between input fields */
+    display: flex;
+    flex-direction: column; /* Align input fields vertically */
+    align-items: center;
+}
+
+/* Input field styling */
+input, select {
+    background-color: #d7e6f9;
+    border: 2px solid aqua;
+    border-radius: 25px; /* Fully rounded inputs */
+    box-sizing: border-box;
+    font-size: 16px;
+    height: 45px;
+    padding: 10px 15px;
+    width: 100%;
+    max-width: 350px; /* Ensures inputs are not too wide */
+    color: #333;
+    transition: border 0.3s ease, background-color 0.3s ease;
+    color: #3b1c44;
+}
+
+input:focus, select:focus {
+    border-color: #1521ff;
+    outline: none;
+    background-color: adcdf5;
+}
+
+/* Labels styling */
+label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #1521ff;
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+    width: 100%;
+    max-width: 350px;
+}
+
+/* Submit button styling */
+.submit {
+    background-color:#7f2199;
+    color: #ffffff;
+    border: none;
+    border-radius: 25px; /* Fully rounded */
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 18px;
+    height: 50px;
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+    max-width: 350px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submit:hover {
+    background-color:aqua;
+    transform: translateY(-2px);
+}
+
+.submit:active {
+    background-color: aqua;
+    transform: translateY(0);
+}

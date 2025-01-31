@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import ListView
 from .models import *
 
-class CourseListView(ListView):
+class CourseListView(ListView): #loggin requierd add later
     model = Course
     template_name = 'course_list.html'
     context_object_name = 'courses'
