@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
+from django.contrib.auth.forms import AuthenticationForm
 
 class UserCreationForm(UserCreationForm):
     name = forms.CharField(max_length=100, label='نام و نام خانوادگی')
@@ -66,7 +67,26 @@ class UserCreationForm(UserCreationForm):
         return user
 
 
-from django.contrib.auth.forms import AuthenticationForm
-
 class StudentLoginForm(AuthenticationForm):
     username = forms.CharField(label="Student Number")  # Rename to reflect student_number
+
+class PasswordResetForm(forms.Form):
+    student_number = forms.CharField(max_length=15, label="شماره دانشجویی", required=True)
+    password1 = forms.CharField(widget=forms.PasswordInput, label="رمز جدید")
+    password2 = forms.CharField(widget=forms.PasswordInput, label="تکرار رمز جدید")
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get("password1")
+        password2 = cleaned_data.get("password2")
+        student_number = cleaned_data.get("student_number")
+
+        # Check if passwords match
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("رمزهای عبور مطابقت ندارند.")
+
+        # Ensure student number exists
+        if not User.objects.filter(student_number=student_number).exists():
+            raise forms.ValidationError("شماره دانشجویی یافت نشد.")
+
+        return cleaned_data
