@@ -64,3 +64,9 @@ class UserCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+from django.contrib.auth.forms import AuthenticationForm
+
+class StudentLoginForm(AuthenticationForm):
+    username = forms.CharField(label="Student Number")  # Rename to reflect student_number
