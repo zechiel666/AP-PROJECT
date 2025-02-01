@@ -9,6 +9,7 @@
 </head>
 <body>
     <h2>لیست دروس و انتخاب واحد</h2>
+    <p>کاربر:{{ user.name }}</p>
 
     <!-- Search & Filter Section -->
     <div class="search">
@@ -85,6 +86,7 @@
 
             searchInput.addEventListener("input", filterCourses);
             departmentFilter.addEventListener("change", filterCourses);
+
             //functionality add later
             document.querySelectorAll(".add-btn").forEach(button => {
                 button.addEventListener("click", function() {

@@ -28,7 +28,7 @@ class CustomLoginView(LoginView):
     template_name = 'user/registration/login.html'  # Set full path to template
 
     def get_success_url(self):
-        return reverse_lazy('#')  # Redirect after login *add later
+        return reverse_lazy('course_list')  # Redirect after login 
     
     
 def password_reset(request):
