@@ -22,9 +22,11 @@
             </div>
             <button type="submit" class="submit">ورود</button>
         </form>
-        
+
+        <button onclick="window.location.href='{% url 'register' %}'" class="submit"> ثبت نام </button>
+
         <div class="links">
-            <a href="{% url 'password_reset' %}">رمز عبور را فراموش کرده‌اید؟</a>
+            <a href="{% url 'password_reset' %}"> رمز عبور خودرا فراموش کرده‌اید؟ </a>
         </div>
 
     </div>

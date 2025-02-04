@@ -7,6 +7,7 @@ from .forms import StudentLoginForm
 from django.contrib import messages
 from .models import User
 
+
 def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
