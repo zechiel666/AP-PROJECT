@@ -40,3 +40,7 @@ class CourseListView(LoginRequiredMixin, ListView):
             messages.error(request, 'ظرفیت پر شده است')
             return redirect('course_list')
         
+        current_units = sum([sc.course.credit for sc in selectedcourse.objects.filter(user = user)])
+        if current_units + course.credits > user.unit :
+            messages.error(request,'واحد انتخاب شده بیش از حداکثر مجاز است')
+            return redirect('course_list')
