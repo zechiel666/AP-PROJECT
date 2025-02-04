@@ -44,3 +44,10 @@ class CourseListView(LoginRequiredMixin, ListView):
         if current_units + course.credits > user.unit :
             messages.error(request,'واحد انتخاب شده بیش از حداکثر مجاز است')
             return redirect('course_list')
+        
+        selected_course = selectedcourse.objects.filter(user = user)
+        for sc in selected_course:
+            if sc.course.examDate == course.examDate and sc.course.examTime == course.examTime:
+                messages.error(request, 'زمان امتحان تداخل دارد')
+                return redirect('course_html')
+        
