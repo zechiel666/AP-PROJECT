@@ -14,6 +14,7 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=15)
     user_level = models.CharField(max_length=10, choices=USER_LEVEL_CHOICES)
     password = models.CharField(max_length=100)
+    unit = models.IntegerField(default=20)
 
     groups = models.ManyToManyField(
         "auth.Group",
