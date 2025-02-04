@@ -46,7 +46,7 @@ class Course(models.Model):
     instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE, related_name='courses')
 
     def __str__(self):
-        return f"{self.name} - {self.department.name} ({self.instructor.name})"
+        return f"{self.name} - {self.department.name} ({self.instructor.name}) - {self.code} - {self.credits}"
 
     def save(self, *args, **kwargs):
         """ Ensure remaining capacity starts as full capacity if not set """

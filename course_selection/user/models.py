@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from courses.models import Course
 
 class User(AbstractUser):
     USER_LEVEL_CHOICES = (
@@ -15,6 +16,8 @@ class User(AbstractUser):
     user_level = models.CharField(max_length=10, choices=USER_LEVEL_CHOICES)
     password = models.CharField(max_length=100)
     unit = models.IntegerField(default=20)
+    passed_courses = models.JSONField(default=list , blank=True)
+    selected_courses = models.JSONField(default=list , blank=True)
 
     groups = models.ManyToManyField(
         "auth.Group",
@@ -29,3 +32,6 @@ class User(AbstractUser):
 
     def __str__(self):
         return f"{self.username} ({self.user_level})"
+    
+    def hass_passed(self , code):
+        return code in self.passed_courses
