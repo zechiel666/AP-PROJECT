@@ -27,7 +27,7 @@ def register(request):
             if user.user_level == 'admin':
                 return redirect('#')  #add later
             else:
-                return redirect('/student-dashboard/')  # Student page
+                return redirect('/courses/')  # Student page
     else:
         form = UserCreationForm()
 
