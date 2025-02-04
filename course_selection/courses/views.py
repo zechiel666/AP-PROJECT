@@ -15,7 +15,7 @@ class CourseListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['departments'] = Department.objects.all()  # Send department list
         context['user'] = self.request.user  # Pass logged-in user's name
-        context['selectedcourse'] = selectedcourse.objects.filter(user = self.request.user)
+        context['selected_course'] = selectedcourse.objects.filter(user = self.request.user).values_list('course__code', flat=True)
         return context
     
     def post(self, request,*args, **kwargs):
