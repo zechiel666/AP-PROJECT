@@ -17,6 +17,7 @@ class User(AbstractUser):
     user_level = models.CharField(max_length=10, choices=USER_LEVEL_CHOICES)
     password = models.CharField(max_length=100)
     unit = models.IntegerField(default=20)
+    selected_unit = models.IntegerField(default=0)
     passed_courses = models.JSONField(default=list , blank=True)
 
     groups = models.ManyToManyField(

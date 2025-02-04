@@ -51,5 +51,14 @@ class CourseListView(LoginRequiredMixin, ListView):
                 messages.error(request, 'زمان امتحان تداخل دارد')
                 return redirect('course_list')
             if sc.course.classDays == course.classDays and (sc.course.startTime < course.endTime and sc.course.endTime > course.startTime):
-                messages.error(request,'زمان کلاس ها تداخل دارد')
+                messages.error(request,'زمان کلاسا تداخل دارد')
                 return redirect('course_list')
+            
+        selectedcourse.objects.create(user=user)
+        course.remainingCapacity -= 1
+        user.selected_unit += course.credits
+        course.save()
+        user.save()
+
+        messages.success (request,f'اخذ شد{course.name} درس ')
+        return redirect('course_list')
