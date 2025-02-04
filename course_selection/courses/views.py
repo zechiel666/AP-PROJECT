@@ -49,5 +49,7 @@ class CourseListView(LoginRequiredMixin, ListView):
         for sc in selected_course:
             if sc.course.examDate == course.examDate and sc.course.examTime == course.examTime:
                 messages.error(request, 'زمان امتحان تداخل دارد')
-                return redirect('course_html')
-        
+                return redirect('course_list')
+            if sc.course.classDays == course.classDays and (sc.course.startTime < course.endTime and sc.course.endTime > course.startTime):
+                messages.error(request,'زمان کلاس ها تداخل دارد')
+                return redirect('course_list')
