@@ -30,6 +30,10 @@ class Course(models.Model):
     startTime = models.TimeField(null=True)  
     endTime = models.TimeField(null=True)    
 
+    #pishniazi va hamniazi
+    pishniaz = models.IntegerField(blank=True , null=True)
+    hamniaz = models.IntegerField(blank=True, null=True)
+
     # Separate Jalali Date and Time
     examDate = jmodels.jDateField(null=True, verbose_name="Exam Date (Jalali)")  # Jalali Date ONLY
     examTime = models.TimeField(null=True, verbose_name="Exam Time")  # Time ONLY
