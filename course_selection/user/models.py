@@ -32,7 +32,7 @@ class User(AbstractUser):
     )
 
     def __str__(self):
-        return f"{self.username} ({self.user_level})"
+        return f"{self.name} - {self.user_level}"
     
     def has_passed(self , code):
         return code in self.passed_courses

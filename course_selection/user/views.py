@@ -17,7 +17,7 @@ def register(request):
                 user.is_staff = True  # Mark admin users
             user.save()  # Now save in DB
             login(request, user)
-            return redirect('/login')
+            return redirect('/login/')
     else:
         form = UserCreationForm()
 
