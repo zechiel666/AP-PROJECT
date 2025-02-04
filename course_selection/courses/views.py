@@ -31,3 +31,12 @@ class CourseListView(LoginRequiredMixin, ListView):
             messages.eror(request,'پیشنیازی رعایت نشده')
             return redirect('course_list')
         
+        #if course.hamniaz:
+          #  if not selectedcourse.objects.filter(student=student, course__id=course.hamniaz).exists() and not student.hass_passed(course.hamniaz):
+           #     messages.error(request, "هم‌نیاز این درس را انتخاب نکرده‌اید یا نگذرانده‌اید.")
+           #     return redirect('course_list')
+        
+        if course.remainingCapacity <=0:
+            messages.error(request, 'ظرفیت پر شده است')
+            return redirect('course_list')
+        
