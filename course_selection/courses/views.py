@@ -26,3 +26,8 @@ class CourseListView(LoginRequiredMixin, ListView):
         if selectedcourse.objects.filter(use=user, course=course).exists():
             messages.erorr(request, 'این درس انتخاب شده است')
             return redirect('course_list')
+        
+        if course.pishniaz and not user.passed_courses:
+            messages.eror(request,'پیشنیازی رعایت نشده')
+            return redirect('course_list')
+        
