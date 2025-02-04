@@ -8,11 +8,12 @@ class User(AbstractUser):
         ('admin', 'Admin'),
         ('student', 'Student'),
     )
+    username = None  # Remove username from AbstractUser
     
     name = models.CharField(max_length=100)
     national_id = models.CharField(max_length=10, unique=True)
     student_number = models.CharField(max_length=15, blank=True, null=True)  # Optional for admins
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=15)
     user_level = models.CharField(max_length=10, choices=USER_LEVEL_CHOICES)
     password = models.CharField(max_length=100)
@@ -30,6 +31,8 @@ class User(AbstractUser):
         related_name="customuser_permissions",  # Fix conflict
         blank=True
     )
+    USERNAME_FIELD = "email"  # Use email instead of username
+    REQUIRED_FIELDS = ["name", "national_id", 'student_number', "phone_number", "user_level"]
 
     def __str__(self):
         return f"{self.name} - {self.user_level}"

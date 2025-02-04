@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'courses',
     'django_jalali',
     'user',
-    'rest_framework',
 ]
 
 MIDDLEWARE = [
