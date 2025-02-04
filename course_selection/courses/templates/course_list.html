@@ -8,6 +8,15 @@
     <link rel="stylesheet" href="{% static 'courses/courseList.css' %}">
 </head>
 <body>
+
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
     <h2>لیست دروس و انتخاب واحد</h2>
     <p>کاربر:{{ user.name }}</p>
 
@@ -51,7 +60,11 @@
                     <td>{{ course.instructor.name }}</td>
                     <td>{{ course.capacity }} / {{ course.remainingCapacity }}</td>
                     <td>
-                        <button class="add-btn" data-course-id="{{ course.id }}">افزودن</button>
+                        <form method = "post" action="{%url 'add_course'%}">
+                            {% csrf_token %}
+                            <input type = "hidden" name = "course_code" value="{{course.code}}">
+                            <button class="add-btn" data-course-id="{{ course.id }}">افزودن</button>
+                        </form>
                     </td>
                 </tr>
                 {% empty %}
@@ -86,14 +99,6 @@
 
             searchInput.addEventListener("input", filterCourses);
             departmentFilter.addEventListener("change", filterCourses);
-
-            //functionality add later
-            document.querySelectorAll(".add-btn").forEach(button => {
-                button.addEventListener("click", function() {
-                    let courseId = this.getAttribute("data-course-id");
-                    alert("Course " + courseId + " added! (Functionality to be implemented)");
-                });
-            });
         });
     </script>
 </body>
