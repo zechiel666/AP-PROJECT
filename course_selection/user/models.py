@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from courses.models import Course
+from django.conf import settings 
 
 class User(AbstractUser):
     USER_LEVEL_CHOICES = (
@@ -17,7 +18,6 @@ class User(AbstractUser):
     password = models.CharField(max_length=100)
     unit = models.IntegerField(default=20)
     passed_courses = models.JSONField(default=list , blank=True)
-    selected_courses = models.JSONField(default=list , blank=True)
 
     groups = models.ManyToManyField(
         "auth.Group",
@@ -35,3 +35,13 @@ class User(AbstractUser):
     
     def hass_passed(self , code):
         return code in self.passed_courses
+
+class selectedcourse(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_for')
+    course = models.ForeignKey(Course ,on_delete=models.CASCADE , related_name='student_select')
+
+    class Meta:
+        unique_together = ('user' , 'course')
+    
+    def __str__(self):
+        return f'{self.user.student_number} - {self.course.code}' 
