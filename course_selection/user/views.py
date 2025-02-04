@@ -3,26 +3,35 @@ from django.contrib.auth import login
 from .forms import *
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
-from .forms import StudentLoginForm
 from django.contrib import messages
 from .models import User
-
 
 def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)  # Don't save yet
+
+            # Set backend based on user level
             if user.user_level == 'admin':
-                user.is_staff = True  # Mark admin users
+                backend = 'django.contrib.auth.backends.ModelBackend'  # Use default for admin-like users
+            else:
+                backend = 'user.auth_backend.StudentNumberBackend'  # Use custom for students
+            
             user.save()  # Now save in DB
-            login(request, user)
-            return redirect('/login/')
+
+            # Explicitly set authentication backend and log in the user
+            login(request, user, backend=backend)
+
+            # Redirect based on user level
+            if user.user_level == 'admin':
+                return redirect('#')  #add later
+            else:
+                return redirect('/student-dashboard/')  # Student page
     else:
         form = UserCreationForm()
 
     return render(request, 'user/register.html', {'form': form})
-
 
 class CustomLoginView(LoginView):
     authentication_form = StudentLoginForm
