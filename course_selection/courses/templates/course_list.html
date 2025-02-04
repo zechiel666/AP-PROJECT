@@ -62,7 +62,7 @@
                     <td>
                         <form method = "post" action="">
                             {% csrf_token %}
-                            <input type = "hidden" name = "course_code" value="{{course.code}}">
+                            <input type = "hidden" name = "course__code" value="{{course.code}}">
                             {%if course.code in selected_course%}
                             <button class="delete-btn" data-course-id="{{ course.id }}">حذف</button>
                             {%else%}

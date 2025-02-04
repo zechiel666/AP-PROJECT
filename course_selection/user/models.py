@@ -34,7 +34,7 @@ class User(AbstractUser):
     def __str__(self):
         return f"{self.username} ({self.user_level})"
     
-    def hass_passed(self , code):
+    def has_passed(self , code):
         return code in self.passed_courses
 
 class selectedcourse(models.Model):

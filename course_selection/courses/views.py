@@ -19,15 +19,15 @@ class CourseListView(LoginRequiredMixin, ListView):
         return context
     
     def post(self, request,*args, **kwargs):
-        course_id = request.post.get('code')
-        course = Course.objects.get(code=course_id)
+        course_code_name = request.POST.get('course__code')
+        course = Course.objects.get(code=course_code_name)
         user = request.user
 
-        if selectedcourse.objects.filter(use=user, course=course).exists():
+        if selectedcourse.objects.filter(user=user, course=course).exists():
             messages.erorr(request, 'این درس انتخاب شده است')
             return redirect('course_list')
         
-        if course.pishniaz and not user.passed_courses:
+        if course.pishniaz and not user.has_passed(course.pishniaz):
             messages.eror(request,'پیشنیازی رعایت نشده')
             return redirect('course_list')
         
@@ -50,11 +50,14 @@ class CourseListView(LoginRequiredMixin, ListView):
             if sc.course.examDate == course.examDate and sc.course.examTime == course.examTime:
                 messages.error(request, 'زمان امتحان تداخل دارد')
                 return redirect('course_list')
-            if sc.course.classDays == course.classDays and (sc.course.startTime < course.endTime and sc.course.endTime > course.startTime):
-                messages.error(request,'زمان کلاسا تداخل دارد')
-                return redirect('course_list')
             
-        selectedcourse.objects.create(user=user)
+        days_overlap = set(sc.course.classDays.split('/')) & set(course.classDays.split('/'))
+        if days_overlap and (sc.course.startTime < course.endTime and sc.course.endTime > course.startTime):
+           messages.error(request, 'زمان کلاسا تداخل دارد')
+           return redirect('course_list')
+
+            
+        selectedcourse.objects.create(user=user, course = course)
         course.remainingCapacity -= 1
         user.selected_unit += course.credits
         course.save()
