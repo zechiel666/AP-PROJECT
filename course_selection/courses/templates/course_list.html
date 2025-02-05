@@ -22,13 +22,14 @@
 
     <!-- Search & Filter Section -->
     <div class="search">
-        <input type="text" id="searchInput" placeholder="جستجو بر اساس کد یا نام درس...">
         <select id="departmentFilter">
             <option value="">همه‌ی گروه‌ها</option>
             {% for department in departments %}
                 <option value="{{ department.name }}">{{ department.name }}</option>
             {% endfor %}
         </select>
+        <input type="text" id="searchInput" placeholder="جستجو بر اساس کد یا نام درس...">
+        <a href="{% url 'weekly_schedule' %}" class="link-btn">مشاهده دوباره برنامه هفتگی</a>
     </div>
 
     <!-- Course Table -->

@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from user.models import selectedcourse
 from django.contrib import messages
 import logging
+from datetime import datetime , time
 
 
 class CourseListView(LoginRequiredMixin, ListView):
@@ -100,14 +101,40 @@ class Removeselectedcourse (View):
 
 
 def weekly_table(request):
-
     selected_courses = selectedcourse.objects.filter(user=request.user)
     courses = []
+    
     for course in selected_courses:
+        start_time = course.course.startTime
+        end_time = course.course.endTime  
+
+        # تبدیل زمان‌ها به فرمت HH:MM
+        start_time_str = start_time.strftime('%H:%M') if isinstance(start_time, time) else ''
+        end_time_str = end_time.strftime('%H:%M') if isinstance(end_time, time) else ''
+
         courses.append({
-           'name': course.course.name,
-           'class_days': course.course.classDays,
-           'start_time': course.course.startTime,
-           'end_time': course.course.endTime,
+            'name': course.course.name,
+            'class_days': course.course.classDays.split(','),
+            'start_time': start_time_str,
+            'end_time': end_time_str,
         })
-    return render(request, 'weekly_table.html', {'courses' : courses})
+        
+    days_of_week = ["شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه"]
+    time_slots = ["08:00 - 10:00", "10:00 - 12:00", "12:00 - 14:00", "14:00 - 16:00", "16:00 - 18:00"]
+
+    # تبدیل زمان‌ها به شیء datetime
+    time_slot_objects = []
+    for slot in time_slots:
+        start_str, end_str = slot.split(' - ')  # جدا کردن زمان شروع و پایان
+        start_time_obj = datetime.strptime(start_str, "%H:%M")
+        end_time_obj = datetime.strptime(end_str, "%H:%M")
+        time_slot_objects.append((start_time_obj, end_time_obj))
+
+    # ترکیب time_slots و time_slot_objects
+    time_slots_with_objects = zip(time_slots, time_slot_objects)
+
+    return render(request, 'weekly_table.html', {
+        'courses': courses, 
+        'days_of_week': days_of_week, 
+        'time_slots_with_objects': time_slots_with_objects  # ارسال ترکیب‌شده
+    })

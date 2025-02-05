@@ -18,31 +18,34 @@
     <a href="{% url 'weekly_schedule' %}" class="add-btn">مشاهده دوباره برنامه هفتگی</a>
 </div>
 
-<div class="container">
-    <table>
-        <thead>
-            <tr>
-                <th>عنوان درس</th>
-                <th>روزهای کلاس</th>
-                <th>زمان کلاس</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for course in courses %}
-                <tr>
-                    <td>{{ course.name }}</td>
-                    <td>{{ course.class_days }}</td>
-                    <td>{{ course.start_time }} - {{ course.end_time }}</td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="3">شما هیچ درسی را انتخاب نکرده‌اید.</td>
-                </tr>
+<table>
+    <thead>
+        <tr>
+            <th>روز</th>
+            {% for time_slot, time_slot_obj in time_slots_with_objects %}
+                <th>{{ time_slot }}</th>
             {% endfor %}
-        </tbody>
-    </table>
-</div>
-
+        </tr>
+    </thead>
+    <tbody>
+        {% for day in days_of_week %}
+        <tr>
+            <td class="day">{{ day }}</td>
+            {% for time_slot, time_slot_obj in time_slots_with_objects %}
+                <td>
+                    {% for course in courses %}
+                        {% if day in course.class_days %}
+                            {% if course.start_time <= time_slot_obj.0 and course.end_time >= time_slot_obj.1 %}
+                                {{ course.name }}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 </body>
 </html>
