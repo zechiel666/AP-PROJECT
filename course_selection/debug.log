@@ -1,0 +1,106 @@
+[2025-02-05 16:14:37,569] [INFO] [django.utils.autoreload] Watching for file changes with StatReloader
+[2025-02-05 16:14:41,909] [DEBUG] [courses.views] POST data received: <QueryDict: {'csrfmiddlewaretoken': ['HDEwmitLwU4BUuzeStPvaTnjJRqJZk2LmkrIKdw4hSmqV7l5xBVl514Lg8kTPnN4'], 'course__code': ['2']}>
+[2025-02-05 16:14:41,909] [INFO] [courses.views] Course code received from POST: None
+[2025-02-05 16:14:41,911] [INFO] [courses.views] User attempting to remove course: fake@gmail.com
+[2025-02-05 16:16:05,798] [INFO] [django.utils.autoreload] /Users/apple/Desktop/AP_Project/AP-Project/course_selection/course_selection/settings.py changed, reloading.
+[2025-02-05 16:16:06,218] [INFO] [django.utils.autoreload] Watching for file changes with StatReloader
+[2025-02-05 16:16:10,769] [DEBUG] [courses.views] POST data received: <QueryDict: {'csrfmiddlewaretoken': ['5DCztrhOoAFIdqElmmUouANr8g13iNJWKkpLRmk79yXxe3qc1u0epIuTFxVd8Quf'], 'course__code': ['1']}>
+[2025-02-05 16:16:10,769] [INFO] [courses.views] Course code received from POST: None
+[2025-02-05 16:16:10,772] [INFO] [courses.views] User attempting to remove course: fake@gmail.com
+[2025-02-05 16:17:46,579] [INFO] [django.utils.autoreload] /Users/apple/Desktop/AP_Project/AP-Project/course_selection/courses/views.py changed, reloading.
+[2025-02-05 16:17:47,233] [INFO] [django.utils.autoreload] Watching for file changes with StatReloader
+[2025-02-05 16:17:53,300] [DEBUG] [courses.views] POST data received: <QueryDict: {'csrfmiddlewaretoken': ['nzfY1jQyi5F8jtCE0qkipT83ZXFM8bTj2g2apeTR33XXk6ovFyq8k1PvwezWYeEC'], 'course__code': ['1']}>
+[2025-02-05 16:17:53,300] [INFO] [courses.views] Course code received from POST: 1
+[2025-02-05 16:17:53,303] [INFO] [courses.views] User attempting to remove course: fake@gmail.com
+[2025-02-05 16:17:53,304] [INFO] [courses.views] Course found: برنامه نویسی پیشرفته, Credits: 3, Remaining Capacity Before: 49
+[2025-02-05 16:17:53,333] [ERROR] [django.request] Internal Server Error: /remove-course/
+Traceback (most recent call last):
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/course_selection/courses/views.py", line 93, in post
+    course.remainingCapcity += 1
+    ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Course' object has no attribute 'remainingCapcity'. Did you mean: 'remainingCapacity'?
+[2025-02-05 16:18:31,979] [INFO] [django.utils.autoreload] /Users/apple/Desktop/AP_Project/AP-Project/course_selection/courses/views.py changed, reloading.
+[2025-02-05 16:18:32,587] [INFO] [django.utils.autoreload] Watching for file changes with StatReloader
+[2025-02-05 16:18:36,228] [DEBUG] [courses.views] POST data received: <QueryDict: {'csrfmiddlewaretoken': ['nzfY1jQyi5F8jtCE0qkipT83ZXFM8bTj2g2apeTR33XXk6ovFyq8k1PvwezWYeEC'], 'course__code': ['1']}>
+[2025-02-05 16:18:36,229] [INFO] [courses.views] Course code received from POST: 1
+[2025-02-05 16:18:36,233] [INFO] [courses.views] User attempting to remove course: fake@gmail.com
+[2025-02-05 16:18:36,235] [INFO] [courses.views] Course found: برنامه نویسی پیشرفته, Credits: 3, Remaining Capacity Before: 49
+[2025-02-05 16:18:36,264] [ERROR] [django.request] Internal Server Error: /remove-course/
+Traceback (most recent call last):
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/course_selection/courses/views.py", line 93, in post
+    course.remainingCapcity += 1
+    ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Course' object has no attribute 'remainingCapcity'. Did you mean: 'remainingCapacity'?
+[2025-02-05 16:18:50,056] [INFO] [django.utils.autoreload] /Users/apple/Desktop/AP_Project/AP-Project/course_selection/courses/views.py changed, reloading.
+[2025-02-05 16:18:50,650] [INFO] [django.utils.autoreload] Watching for file changes with StatReloader
+[2025-02-05 16:18:54,644] [DEBUG] [courses.views] POST data received: <QueryDict: {'csrfmiddlewaretoken': ['nzfY1jQyi5F8jtCE0qkipT83ZXFM8bTj2g2apeTR33XXk6ovFyq8k1PvwezWYeEC'], 'course__code': ['1']}>
+[2025-02-05 16:18:54,645] [INFO] [courses.views] Course code received from POST: 1
+[2025-02-05 16:18:54,648] [INFO] [courses.views] User attempting to remove course: fake@gmail.com
+[2025-02-05 16:18:54,676] [ERROR] [django.request] Internal Server Error: /remove-course/
+Traceback (most recent call last):
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/course_selection/courses/views.py", line 91, in post
+    logger.info(f'Course found: {course.name}, Credits: {course.credits}, Remaining Capacity Before: {user.remainingCapacity}')
+                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/utils/functional.py", line 253, in inner
+    return func(_wrapped, *args)
+           ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'User' object has no attribute 'remainingCapacity'
+[2025-02-05 16:19:31,347] [INFO] [django.utils.autoreload] /Users/apple/Desktop/AP_Project/AP-Project/course_selection/courses/views.py changed, reloading.
+[2025-02-05 16:19:31,927] [INFO] [django.utils.autoreload] Watching for file changes with StatReloader
+[2025-02-05 16:19:36,725] [ERROR] [django.request] Internal Server Error: /remove-course/
+Traceback (most recent call last):
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/apple/Desktop/AP_Project/AP-Project/course_selection/courses/views.py", line 93, in post
+    course.remainingCapcity += 1
+    ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Course' object has no attribute 'remainingCapcity'. Did you mean: 'remainingCapacity'?
+[2025-02-05 16:20:18,679] [INFO] [django.utils.autoreload] /Users/apple/Desktop/AP_Project/AP-Project/course_selection/courses/views.py changed, reloading.
+[2025-02-05 16:20:19,098] [INFO] [django.utils.autoreload] Watching for file changes with StatReloader
+[2025-02-05 16:20:59,817] [INFO] [django.utils.autoreload] /Users/apple/Desktop/AP_Project/AP-Project/course_selection/course_selection/settings.py changed, reloading.

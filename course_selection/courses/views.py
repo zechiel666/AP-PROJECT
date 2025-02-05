@@ -4,6 +4,8 @@ from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from user.models import selectedcourse
 from django.contrib import messages
+import logging
+
 
 class CourseListView(LoginRequiredMixin, ListView):
     model = Course
@@ -70,19 +72,21 @@ class CourseListView(LoginRequiredMixin, ListView):
         messages.success (request,f'اخذ شد{course.name} درس ')
         return redirect('course_list')
 
+logger = logging.getLogger(__name__)
+
 class Removeselectedcourse (View):
     def post(self, request, *args, **kwargs):
-        course_code = request.POST.get('course_code')
+        course_code = request.POST.get('course__code')
         user = request.user
         try:
-            selected_course = selectedcourse.objects.get(user=user, course__code= course_code)
+            selected_course = selectedcourse.objects.get(user=user, course__code=course_code)
         except selectedcourse.DoesNotExist:
             messages.error (request, 'درس در لیست اخذ شده شما قرار ندارد')
             return redirect('course_list')
         
         course = selected_course.course
 
-        course.remainingCapcity += 1
+        course.remainingCapacity += 1
         course.save()
 
         user.selected_unit -= course.credits
@@ -90,7 +94,7 @@ class Removeselectedcourse (View):
 
         selected_course.delete()
 
-        messages.SUCCESS(request, f' حذف شد {course.name} درس ')
+        messages.success(request, f' حذف شد {course.name} درس ')
         return redirect('course_list')
     
 
