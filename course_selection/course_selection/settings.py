@@ -134,8 +134,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")  # For production (optional)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTHENTICATION_BACKENDS = [
-    'user.auth_backend.StudentNumberBackend',  # Custom backend for student_number login
-    'django.contrib.auth.backends.ModelBackend',  # Keep default for admin login
+    'django.contrib.auth.backends.ModelBackend',  # Default authentication for all users
 ]
 AUTH_USER_MODEL = 'user.User'  # Your custom User model
 
