@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
+from django.contrib import messages
 from .forms import *
-from django.contrib.auth.views import LoginView
-from django.urls import reverse_lazy
 from django.contrib import messages
 from .models import User
 
@@ -25,16 +24,26 @@ def register(request):
 
     return render(request, 'user/register.html', {'form': form})
 
+def custom_login_view(request):
+    template = 'user/registration/login.html'  # Set full path to template
+    form = StudentLoginForm(request.POST or None)
 
-class CustomLoginView(LoginView):
-    authentication_form = StudentLoginForm
-    template_name = 'user/registration/login.html'  # Set full path to template
+    if request.method == "POST" and form.is_valid():
+        user = form.get_user()
+        login(request, user)
 
-    def get_success_url(self):
-        user = self.request.user
-        if user.user_level == 'admin':
-            return reverse_lazy('#')  # Redirect admins
-        return reverse_lazy('course_list')  # Redirect students
+        # Redirect based on user type
+        if user.user_level == "student":
+            return redirect('/courses/')
+        elif user.user_level == "teacher":
+            return redirect("#")  #add later
+        else:
+            return redirect("default_dashboard")
+
+        messages.error(request, "Invalid student number or password.")
+
+    return render(request, template, {"form": form})
+
     
 def password_reset(request):
     if request.method == "POST":

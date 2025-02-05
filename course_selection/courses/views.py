@@ -2,7 +2,7 @@ from django.shortcuts import render , redirect
 from django.views.generic import ListView, View
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
-from user.models import selectedcourse
+from user.models import SelectedCourse
 from django.contrib import messages
 import logging
 
@@ -16,7 +16,7 @@ class CourseListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['departments'] = Department.objects.all()  # Send department list
         context['user'] = self.request.user  # Pass logged-in user's name
-        context['selected_course'] = selectedcourse.objects.filter(user = self.request.user).values_list('course__code', flat=True)
+        context['selected_course'] = SelectedCourse.objects.filter(user = self.request.user).values_list('course__code', flat=True)
         return context
     
     def post(self, request,*args, **kwargs):
@@ -24,7 +24,7 @@ class CourseListView(LoginRequiredMixin, ListView):
         course = Course.objects.get(code=course_code_name)
         user = request.user
 
-        if selectedcourse.objects.filter(user=user, course=course).exists():
+        if SelectedCourse.objects.filter(user=user, course=course).exists():
             messages.error(request, 'این درس انتخاب شده است')
             return redirect('course_list')
         
@@ -47,13 +47,13 @@ class CourseListView(LoginRequiredMixin, ListView):
             messages.error(request,'واحد انتخاب شده بیش از حداکثر مجاز است')
             return redirect('course_list')
         
-        selected_course = selectedcourse.objects.filter(user = user)
+        selected_course = SelectedCourse.objects.filter(user = user)
         for sc in selected_course:
             if sc.course.examDate == course.examDate and sc.course.examTime == course.examTime:
                 messages.error(request, 'زمان امتحان تداخل دارد')
                 return redirect('course_list')
             
-        selected_courses = selectedcourse.objects.filter(user=user)
+        selected_courses = SelectedCourse.objects.filter(user=user)
         for sc in selected_courses:
             days_overlap = set(sc.course.classDays.split('/')) & set(course.classDays.split('/'))
             if days_overlap and (sc.course.startTime < course.endTime and sc.course.endTime > course.startTime):
@@ -62,7 +62,7 @@ class CourseListView(LoginRequiredMixin, ListView):
 
 
             
-        selectedcourse.objects.create(user=user, course = course)
+        SelectedCourse.objects.create(user=user, course = course)
         course.remainingCapacity -= 1
         user.selected_unit += course.credits
         course.save()
@@ -78,8 +78,8 @@ class Removeselectedcourse (View):
         course_code = request.POST.get('course__code')
         user = request.user
         try:
-            selected_course = selectedcourse.objects.get(user=user, course__code=course_code)
-        except selectedcourse.DoesNotExist:
+            selected_course = SelectedCourse.objects.get(user=user, course__code=course_code)
+        except SelectedCourse.DoesNotExist:
             messages.error (request, 'درس در لیست اخذ شده شما قرار ندارد')
             return redirect('course_list')
         
@@ -99,7 +99,7 @@ class Removeselectedcourse (View):
 
 
 def weekly_table(request):
-    selected_courses = selectedcourse.objects.filter(user=request.user)
+    selected_courses = SelectedCourse.objects.filter(user=request.user)
     courses = []
 
     for course in selected_courses:

@@ -14,16 +14,15 @@
             {% csrf_token %}
             <div class="input-container">
                 <label for="id_username">شماره دانشجویی</label>
-                <input type="text" name="username" id="id_username" required>
+                <input type="text" name="student_number" id="student_number" required>
             </div>
             <div class="input-container">
                 <label for="id_password">رمز عبور</label>
-                <input type="password" name="password" id="id_password" required>
+                <input type="password" name="password" id="password" required>
             </div>
             <button type="submit" class="submit">ورود</button>
         </form>
 
-        <button onclick="window.location.href='{% url 'register' %}'" class="submit"> ثبت نام </button>
 
         <div class="links">
             <a href="{% url 'password_reset' %}"> رمز عبور خودرا فراموش کرده‌اید؟ </a>

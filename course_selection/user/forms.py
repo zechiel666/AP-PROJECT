@@ -47,8 +47,8 @@ class UserCreationForm(UserCreationForm):
         if user_level == 'student' and not student_number:
             self.add_error('student_number', "Student number is required for students.")
         
-        if user_level == 'admin' and not student_number:
-            self.add_error('student_number', "Code is required for admins.")
+        if user_level == 'teacher' and not student_number:
+            self.add_error('student_number', "Code is required for teachers.")
 
         if cleaned_data.get('password1') != cleaned_data.get('password2'):
             self.add_error('password1', 'passwords must be same')
@@ -67,9 +67,30 @@ class UserCreationForm(UserCreationForm):
         return user
 
 
-class StudentLoginForm(AuthenticationForm):
-    username = forms.CharField(label="Student Number")  # Rename to reflect student_number
+class StudentLoginForm(forms.Form):  # Not inheriting from AuthenticationForm since we use student_number
+    student_number = forms.CharField(label="Student Number", max_length=15)
+    password = forms.CharField(label="Password", widget=forms.PasswordInput)
 
+    def clean(self):
+        cleaned_data = super().clean()
+        student_number = cleaned_data.get("student_number")
+        password = cleaned_data.get("password")
+
+        if student_number and password:
+            try:
+                user = User.objects.get(student_number=student_number)
+                self.user = user if user.check_password(password) else None
+            except User.DoesNotExist:
+                self.user = None
+
+            if self.user is None:
+                raise forms.ValidationError("Invalid student number or password.")
+
+        return cleaned_data
+
+    def get_user(self):
+        return self.user
+ 
 class PasswordResetForm(forms.Form):
     student_number = forms.CharField(max_length=15, label="شماره دانشجویی", required=True)
     password1 = forms.CharField(widget=forms.PasswordInput, label="رمز جدید")
