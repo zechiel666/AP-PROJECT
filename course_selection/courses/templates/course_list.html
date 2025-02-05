@@ -60,7 +60,7 @@
                     <td>{{ course.instructor.name }}</td>
                     <td>{{ course.capacity }} / {{ course.remainingCapacity }}</td>
                     <td>
-                        <form method = "post" action="{% if course.code in selected_course %}{% url 'remove_selected_course %'}{% else %}{% url 'course_list %'}{% endif %}">
+                        <form method = "post" action="{% if course.code in selected_course %}{% url 'remove_selected_course' %}{% else %}{% url 'course_list' %}{% endif %}">
                             {% csrf_token %}
                             <input type = "hidden" name = "course__code" value="{{course.code}}">
                             <button type='submit'>
