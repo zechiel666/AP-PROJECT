@@ -105,8 +105,8 @@ def weekly_table(request):
     for course in selected_courses:
         courses.append({
             'name': course.course.name,
-            'class_days': course.course.classDays,  # مقدار را بدون تغییر ارسال کنید
-            'start_time': str(course.course.startTime),  # مقدار را به استرینگ تبدیل کنید
+            'class_days': course.course.classDays,  
+            'start_time': str(course.course.startTime), 
         })
 
     days_of_week = ["shanbe/doshanbe", "yekshanbe/seshanbe"] 
