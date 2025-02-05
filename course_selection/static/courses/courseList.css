@@ -158,3 +158,8 @@ tbody tr:hover {
     color:black;
     background-color:white;
 }
+
+.course {
+    color: black;
+    /*background-color: #7f2199; */
+}

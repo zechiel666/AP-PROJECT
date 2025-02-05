@@ -10,38 +10,31 @@ def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)  # Don't save yet
+            user = form.save()  # Save user in DB
 
-            # Set backend based on user level
-            if user.user_level == 'admin':
-                backend = 'django.contrib.auth.backends.ModelBackend'  # Use default for admin-like users
-            else:
-                backend = 'user.auth_backend.StudentNumberBackend'  # Use custom for students
-            
-            user.save()  # Now save in DB
-
-            # Explicitly set authentication backend and log in the user
-            login(request, user, backend=backend)
+            # Log the user in
+            login(request, user)
 
             # Redirect based on user level
             if user.user_level == 'admin':
-                return redirect('#')  #add later
-            else:
-                return redirect('/courses/')  # Student page
+                return redirect('#')  # add later
+            return redirect('/courses/')  # Redirect students
+
     else:
         form = UserCreationForm()
 
     return render(request, 'user/register.html', {'form': form})
+
 
 class CustomLoginView(LoginView):
     authentication_form = StudentLoginForm
     template_name = 'user/registration/login.html'  # Set full path to template
 
     def get_success_url(self):
-
-        print("Login successful!")
-        return reverse_lazy('course_list') # Redirect after login 
-    
+        user = self.request.user
+        if user.user_level == 'admin':
+            return reverse_lazy('#')  # Redirect admins
+        return reverse_lazy('course_list')  # Redirect students
     
 def password_reset(request):
     if request.method == "POST":

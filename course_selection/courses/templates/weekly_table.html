@@ -22,22 +22,20 @@
     <thead>
         <tr>
             <th>روز</th>
-            {% for time_slot, time_slot_obj in time_slots_with_objects %}
+            {% for time_slot in time_slots %}
                 <th>{{ time_slot }}</th>
             {% endfor %}
         </tr>
     </thead>
     <tbody>
-        {% for day in days_of_week %}
+        {% for days in days_of_week %}
         <tr>
-            <td class="day">{{ day }}</td>
-            {% for time_slot, time_slot_obj in time_slots_with_objects %}
-                <td>
+            <td class="day">{{ days }}</td> 
+            {% for time_slot in time_slots %}
+                <td class="course">
                     {% for course in courses %}
-                        {% if day in course.class_days %}
-                            {% if course.start_time <= time_slot_obj.0 and course.end_time >= time_slot_obj.1 %}
-                                {{ course.name }}
-                            {% endif %}
+                        {% if days == course.class_days and course.start_time == time_slot %}
+                            {{ course.name }}
                         {% endif %}
                     {% endfor %}
                 </td>
