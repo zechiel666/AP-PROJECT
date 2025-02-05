@@ -17,7 +17,7 @@ class CourseAdminForm(forms.ModelForm):
 
 class CourseAdmin(admin.ModelAdmin):
     form = CourseAdminForm
-    list_display = ('name', 'examDate_persian', 'examTime')  # Show Date & Time
+    list_display = ('name', 'examDate_persian', 'examTime','instructor','department')  # Show Date & Time
     list_filter = (('examDate', JDateFieldListFilter),)
 
     def examDate_persian(self, obj):

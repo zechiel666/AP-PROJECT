@@ -138,3 +138,4 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Keep default for admin login
 ]
 AUTH_USER_MODEL = 'user.User'  # Your custom User model
+
