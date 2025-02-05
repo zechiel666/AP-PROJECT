@@ -51,11 +51,19 @@ class User(AbstractUser):
         return code in self.passed_courses
 
 class selectedcourse(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_for')
-    course = models.ForeignKey(Course ,on_delete=models.CASCADE , related_name='student_select')
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.CASCADE,  # Automatically delete related records when user is deleted
+        related_name="selected_courses"
+    )
+    course = models.ForeignKey(
+        Course, 
+        on_delete=models.CASCADE, 
+        related_name="student_select"
+    )
 
     class Meta:
-        unique_together = ('user' , 'course')
-    
+        unique_together = ('user', 'course')
+
     def __str__(self):
-        return f'{self.user.student_number} - {self.course.code}' 
+        return f'{self.user.student_number} - {self.course.code}'
