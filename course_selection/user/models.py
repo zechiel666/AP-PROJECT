@@ -19,20 +19,10 @@ class UserManager(BaseUserManager):
         """Create a Django superuser, not a teacher"""
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
-
-        # Make sure this does not affect regular 'admin' teachers
-        extra_fields.setdefault('user_level', 'superuser')  # Add a new level for real superusers
+        extra_fields.setdefault('user_level', 'admin')
 
         return self.create_user(email, password, **extra_fields)
 
-
-
-class User(AbstractBaseUser, PermissionsMixin):
-    USER_LEVEL_CHOICES = (
-        ('student', 'Student'),
-        ('teacher', 'Teacher'),  # Instead of 'admin'
-        ('superuser', 'Superuser')  # To differentiate from Django superuser
-    )
 
 
 class User(AbstractBaseUser, PermissionsMixin):
