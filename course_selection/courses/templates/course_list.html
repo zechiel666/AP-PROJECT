@@ -60,14 +60,16 @@
                     <td>{{ course.instructor.name }}</td>
                     <td>{{ course.capacity }} / {{ course.remainingCapacity }}</td>
                     <td>
-                        <form method = "post" action="">
+                        <form method = "post" action="{% if course.code in selected_course %}{% url 'remove_selected_course %'}{% else %}{% url 'course_list %'}{% endif %}">
                             {% csrf_token %}
                             <input type = "hidden" name = "course__code" value="{{course.code}}">
-                            {%if course.code in selected_course%}
-                            <button class="delete-btn" data-course-id="{{ course.id }}">حذف</button>
-                            {%else%}
-                            <button class="add-btn" data-course-id="{{ course.id }}">افزودن</button>
-                            {%endif%}
+                            <button type='submit'>
+                               {%if course.code in selected_course%}
+                               حذف
+                               {%else%}
+                               افزودن
+                               {%endif%}
+                            </button>
                         </form>
                     </td>
                 </tr>
