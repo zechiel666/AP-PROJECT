@@ -49,7 +49,6 @@ class Course(models.Model):
         return f"{self.name} - {self.department.name} ({self.instructor.name}) - {self.code} - {self.credits}"
 
     def save(self, *args, **kwargs):
-        """ Ensure remaining capacity starts as full capacity if not set """
-        if not self.remainingCapacity:
+        if self.remainingCapacity is None and self.pk is None: 
             self.remainingCapacity = self.capacity
         super().save(*args, **kwargs)
