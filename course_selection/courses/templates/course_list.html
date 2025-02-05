@@ -63,13 +63,11 @@
                         <form method = "POST" action="{% if course.code in selected_course %}{% url 'remove_selected_course' %}{% else %}{% url 'course_list' %}{% endif %}">
                             {% csrf_token %}
                             <input type = "hidden" name = "course__code" value="{{ course.code }}">
-                            <button type='submit'>
                                {%if course.code in selected_course%}
-                               حذف
+                               <button type='submit' class='delete-btn'> حذف  </button>
                                {%else%}
-                               افزودن
+                               <button type='submit' class='add-btn'> افزودن </button>
                                {%endif%}
-                            </button>
                         </form>
                     </td>
                 </tr>
