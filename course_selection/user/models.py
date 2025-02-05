@@ -5,7 +5,6 @@ from django.conf import settings
 from django.utils import timezone
 
 
-
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -17,16 +16,23 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
+        """Create a Django superuser, not a teacher"""
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('user_level', 'admin')  # تعیین سطح کاربر به صورت پیش‌فرض برای ادمین
 
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
+        # Make sure this does not affect regular 'admin' teachers
+        extra_fields.setdefault('user_level', 'superuser')  # Add a new level for real superusers
 
         return self.create_user(email, password, **extra_fields)
+
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    USER_LEVEL_CHOICES = (
+        ('student', 'Student'),
+        ('teacher', 'Teacher'),  # Instead of 'admin'
+        ('superuser', 'Superuser')  # To differentiate from Django superuser
+    )
 
 
 class User(AbstractBaseUser, PermissionsMixin):
