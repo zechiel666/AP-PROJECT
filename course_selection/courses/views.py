@@ -1,5 +1,5 @@
 from django.shortcuts import render , redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, View
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from user.models import selectedcourse
@@ -69,3 +69,30 @@ class CourseListView(LoginRequiredMixin, ListView):
 
         messages.success (request,f'اخذ شد{course.name} درس ')
         return redirect('course_list')
+
+class Removeselectedcourse (View):
+    def post(self, request, *args, **kwargs):
+        course_code = request.POST.get('course_code')
+        user = request.user
+        try:
+            selected_course = selectedcourse.objects.get(user=user, course__code= course_code)
+        except selectedcourse.DoesNotExist:
+            messages.error (request, 'درس در لیست اخذ شده شما قرار ندارد')
+            return redirect('course_list')
+        
+        course = selected_course.course
+
+        course.remainingCapcity += 1
+        course.save()
+
+        user.selected_unit -= course.credits
+        user.save()
+
+        selected_course.delete()
+
+        messages.SUCCESS(request, f' حذف شد {course.name} درس ')
+        return redirect('course_list')
+    
+
+
+  
