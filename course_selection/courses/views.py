@@ -1,16 +1,24 @@
 from django.shortcuts import render , redirect
 from django.views.generic import ListView, View
 from .models import *
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from user.models import SelectedCourse
 from django.contrib import messages
 import logging
 
-class CourseListView(LoginRequiredMixin, ListView):
+class CourseListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Course
     template_name = 'course_list.html'
     context_object_name = 'courses'
     login_url = '/login/'  # Redirect to login page if not authenticated
+
+    def test_func(self):
+        # Check if the user is a student
+        return self.request.user.user_level == "student"
+
+    def handle_no_permission(self):
+        # Redirect to a forbidden page if the user is not authorized
+        return redirect("forbidden")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
