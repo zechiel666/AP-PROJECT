@@ -23,7 +23,11 @@
         <tr>
             <th>روز</th>
             {% for time_slot in time_slots %}
-                <th>{{ time_slot }}</th>
+               {% for time_sheet, time_11 in time_sheets.items %}
+                   {% if time_slot == time_sheet %}
+                      <th>{{ time_11 }}</th>
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
         </tr>
     </thead>
@@ -32,13 +36,13 @@
         <tr>
             <td class="day">{{ days }}</td> 
             {% for time_slot in time_slots %}
-                <td class="course">
-                    {% for course in courses %}
-                        {% if days == course.class_days and course.start_time == time_slot %}
-                            {{ course.name }}
-                        {% endif %}
-                    {% endfor %}
-                </td>
+              <td class="course">
+                {% for course in courses %}
+                    {% if course.class_days == days and course.start_time == time_slot %}
+                        {{ course.name }}
+                    {% endif %}
+                {% endfor %}
+              </td>            
             {% endfor %}
         </tr>
         {% endfor %}

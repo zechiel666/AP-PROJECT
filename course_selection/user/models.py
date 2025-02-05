@@ -69,4 +69,4 @@ class selectedcourse(models.Model):
         unique_together = ('user' , 'course')
     
     def __str__(self):
-        return f'{self.user.student_number} - {self.course.code}' 
+        return f'{self.user.student_number} - {self.course.code} ' 

@@ -5,8 +5,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from user.models import selectedcourse
 from django.contrib import messages
 import logging
-from datetime import datetime , time
-
 
 class CourseListView(LoginRequiredMixin, ListView):
     model = Course
@@ -103,21 +101,20 @@ class Removeselectedcourse (View):
 def weekly_table(request):
     selected_courses = selectedcourse.objects.filter(user=request.user)
     courses = []
-    
-    for course in selected_courses:
 
+    for course in selected_courses:
         courses.append({
             'name': course.course.name,
-            'class_days': course.course.classDays,
-            'start_time': course.course.startTime,
+            'class_days': course.course.classDays,  # مقدار را بدون تغییر ارسال کنید
+            'start_time': str(course.course.startTime),  # مقدار را به استرینگ تبدیل کنید
         })
 
-    days_of_week = ["شنبه/دوشنبه" , "یکشنبه/دوشنبه"]
-    
+    days_of_week = ["shanbe/doshanbe", "yekshanbe/seshanbe"] 
     time_slots = ["08:00:00", "10:00:00", "13:00:00", "15:00:00"]
-
+    time_sheets = {"08:00:00":'08:00-10:00', "10:00:00":'10:00-12:00', "13:00:00":'13:00-15:00', "15:00:00":'15:00-17:00'}
     return render(request, 'weekly_table.html', {
         'courses': courses, 
         'days_of_week': days_of_week, 
-        'time_slots': time_slots  ,
+        'time_slots': time_slots,
+        'time_sheets' : time_sheets,
     })
