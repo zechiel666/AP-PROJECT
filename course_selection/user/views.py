@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib import messages
 from .forms import *
-from django.contrib import messages
 from .models import User
 
 def register(request):
@@ -15,7 +14,7 @@ def register(request):
             login(request, user)
 
             # Redirect based on user level
-            if user.user_level == 'admin':
+            if user.user_level == 'teacher':
                 return redirect('#')  # add later
             return redirect('/courses/')  # Redirect students
 
@@ -43,6 +42,10 @@ def custom_login_view(request):
         messages.error(request, "Invalid student number or password.")
 
     return render(request, template, {"form": form})
+
+def custom_logout_view(request):
+    logout(request)
+    return redirect("login")  # Redirect to login page after logout
 
     
 def password_reset(request):

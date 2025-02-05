@@ -29,7 +29,11 @@
             {% endfor %}
         </select>
         <input type="text" id="searchInput" placeholder="جستجو بر اساس کد یا نام درس...">
-        <a href="{% url 'weekly_schedule' %}" class="link-btn">مشاهده دوباره برنامه هفتگی</a>
+        <a href="{% url 'weekly_schedule' %}" class="add-btn">مشاهده برنامه هفتگی</a>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="add-btn">خروج</button>
+        </form>
     </div>
 
     <!-- Course Table -->

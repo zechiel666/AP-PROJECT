@@ -5,4 +5,5 @@ urlpatterns=[
     path('register/', register, name='register'),
     path('login/', custom_login_view, name='login'),
     path("password-reset/", password_reset, name="password_reset"),
+    path("logout/", custom_logout_view, name="logout"),
 ] 
