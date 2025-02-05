@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنامه هفتگی</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'courses/courseList.css' %}">
+</head>
+<body>
+
+<h2>برنامه هفتگی</h2>
+
+<!-- btn for go to courses -->
+<div class="buttons">
+    <a href="{% url 'course_list' %}" class="add-btn">بازگشت به انتخاب واحد</a>
+    <a href="{% url 'weekly_schedule' %}" class="add-btn">مشاهده دوباره برنامه هفتگی</a>
+</div>
+
+<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>عنوان درس</th>
+                <th>روزهای کلاس</th>
+                <th>زمان کلاس</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+                <tr>
+                    <td>{{ course.name }}</td>
+                    <td>{{ course.class_days }}</td>
+                    <td>{{ course.start_time }} - {{ course.end_time }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">شما هیچ درسی را انتخاب نکرده‌اید.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>

@@ -104,7 +104,7 @@ def weekly_table(request):
     selected_courses = selectedcourse.objects.filter(user=request.user)
     courses = []
     for course in selected_courses:
-        course.append({
+        courses.append({
            'name': course.course.name,
            'class_days': course.course.classDays,
            'start_time': course.course.startTime,
