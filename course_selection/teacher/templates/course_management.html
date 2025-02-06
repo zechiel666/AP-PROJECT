@@ -34,39 +34,82 @@
         </form>
     </div>
 
-    <!-- Course List -->
-    <div class="container">
-        <h3 class="section-title">لیست تمامی دروس</h3>
-        <table class="course-table">
-            <thead>
-                <tr>
-                    <th>کد</th>
-                    <th>نام</th>
-                    <th>دپارتمان</th>
-                    <th>استاد</th>
-                    <th>عملیات</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for course in courses %}
-                <tr>
-                    <td class="course">{{ course.code }}</td>
-                    <td class="course">{{ course.name }}</td>
-                    <td class="course">{{ course.department.name }}</td>
-                    <td class="course">{{ course.instructor.name }}</td>
-                    <td>
-                        <form method="POST" action="{% url 'delete_course' course.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="delete-btn">حذف</button>
-                        </form>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr><td colspan="5" class="empty-message">هیچ درسی یافت نشد.</td></tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-
+ <!-- Course List -->
+<div class="container">
+    <h3 class="section-title">لیست تمامی دروس</h3>
+    <table class="course-table">
+        <thead>
+            <tr>
+                <th>کد</th>
+                <th>نام</th>
+                <th>دانشکده</th>
+                <th>استاد</th>
+                <th>تعداد واحد</th>
+                <th>روزهای کلاس</th>
+                <th>زمان شروع</th>
+                <th>زمان پایان</th>
+                <th>پیش‌نیاز</th>
+                <th>هم‌نیاز</th>
+                <th>ظرفیت کل</th>
+                <th>ظرفیت باقی‌مانده</th>
+                <th>تاریخ امتحان</th>
+                <th>ساعت امتحان</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <td class="course">{{ course.code }}</td>
+                <td class="course">{{ course.name }}</td>
+                <td class="course">{{ course.department.name }}</td>
+                <td class="course">{{ course.instructor.name }}</td>
+                <td class="course">{{ course.credits }}</td>
+                <td class="course">{{ course.classDays }}</td>
+                <td class="course">{{ course.startTime|time:"H:i" }}</td>
+                <td class="course">{{ course.endTime|time:"H:i" }}</td>
+                <td class="course">
+                    {% if course.pishniaz %}
+                        {{ course.pishniaz }}
+                    {% else %}
+                        ندارد
+                    {% endif %}
+                </td>
+                <td class="course">
+                    {% if course.hamniaz %}
+                        {{ course.hamniaz }}
+                    {% else %}
+                        ندارد
+                    {% endif %}
+                </td>
+                <td class="course">{{ course.capacity }}</td>
+                <td class="course">{{ course.remainingCapacity }}</td>
+                <td class="course">
+                    {% if course.examDate %}
+                        {{ course.examDate }}
+                    {% else %}
+                        تعیین نشده
+                    {% endif %}
+                </td>
+                <td class="course">
+                    {% if course.examTime %}
+                        {{ course.examTime|time:"H:i" }}
+                    {% else %}
+                        تعیین نشده
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="POST" action="{% url 'delete_course' course.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-btn">حذف</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="15" class="empty-message">هیچ درسی یافت نشد.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
