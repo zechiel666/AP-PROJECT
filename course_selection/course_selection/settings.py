@@ -138,4 +138,3 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default authentication for all users
 ]
 AUTH_USER_MODEL = 'user.User'  # Your custom User model
-

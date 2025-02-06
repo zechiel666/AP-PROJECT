@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
-from django.contrib import messages
+from django.contrib import messages , 
 from .forms import *
 from .models import User
+
+
 
 def register(request):
     if request.method == "POST":
@@ -35,7 +37,7 @@ def custom_login_view(request):
         if user.user_level == "student":
             return redirect('/courses/')
         elif user.user_level == "teacher":
-            return redirect("#")  #add later
+            return redirect("/admin/")  #add later
         else:
             return redirect("default_dashboard")
 
