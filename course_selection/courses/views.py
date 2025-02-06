@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from user.models import SelectedCourse
 from django.contrib import messages
 import logging
+from datetime import time, timedelta, datetime
 
 class CourseListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Course
@@ -109,6 +110,14 @@ class Removeselectedcourse (View):
         return redirect('course_list')
     
 
+def generate_time_slots(start, end, interval_minutes=30):
+    """Generate time slots in HH:MM:SS format with a given interval."""
+    slots = []
+    current_time = start
+    while current_time < end:
+        slots.append(current_time.strftime("%H:%M:%S"))
+        current_time += timedelta(minutes=interval_minutes)
+    return slots
 
 def weekly_table(request):
     selected_courses = SelectedCourse.objects.filter(user=request.user)
@@ -118,10 +127,11 @@ def weekly_table(request):
         courses.append({
             'name': course.course.name,
             'class_days': course.course.classDays,  
-            'start_time': str(course.course.startTime), 
+            'start_time': str(course.course.startTime),
+            'end_time': str(course.course.endTime), 
         })
 
-    days_of_week = ["shanbe/doshanbe", "yekshanbe/seshanbe"] 
+    days_of_week = ["شنبه/دوشنبه", "یکشنبه/سشنبه"] 
     time_slots = ["08:00:00", "10:00:00", "13:00:00", "15:00:00"]
     time_sheets = {"08:00:00":'08:00-10:00', "10:00:00":'10:00-12:00', "13:00:00":'13:00-15:00', "15:00:00":'15:00-17:00'}
     return render(request, 'weekly_table.html', {

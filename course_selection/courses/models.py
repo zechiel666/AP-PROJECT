@@ -3,8 +3,8 @@ from django_jalali.db import models as jmodels  # Import Jalali date field to co
 
 # Weekday Choices
 WEEKDAY_CHOICES = [
-    ('shanbe/doshanbe', 'shanbe/doshanbe'),
-    ('yekshanbe/seshanbe', 'yekshanbe/seshanbe')
+    ('شنبه/دوشنبه', 'شنبه/دوشنبه'),
+    ('یکشنبه/سشنبه', 'یکشنبه/سشنبه')
 ]
 class Department(models.Model):
     id = models.AutoField(primary_key=True)
