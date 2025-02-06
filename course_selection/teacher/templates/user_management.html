@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{% block style %}    
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'teacher/user_manager.css' %}">
+{% endblock %}
 
 {% block content %}
 <h2>مدیریت کاربران</h2>
