@@ -42,15 +42,16 @@ class CourseListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             return redirect('course_list')
         
         if course.pishniaz:
-          pishniaz_code = course.pishniaz
-          if not user.has_passed(pishniaz_code):
-            messages.error(request,'پیشنیازی رعایت نشده')
-            return redirect('course_list')
+            pishniaz_code = course.pishniaz
+            if not user.has_passed(pishniaz_code):
+                messages.error(request,'پیشنیازی رعایت نشده')
+                return redirect('course_list')
         
-        #if course.hamniaz:
-          #  if not selectedcourse.objects.filter(student=student, course__id=course.hamniaz).exists() and not student.hass_passed(course.hamniaz):
-           #     messages.error(request, "هم‌نیاز این درس را انتخاب نکرده‌اید یا نگذرانده‌اید.")
-           #     return redirect('course_list')
+        if course.hamniaz:
+            hamniaz_code = course.ha
+            if not user.has_passed(hamniaz_code):
+                messages.error(request,'همنیازی رعایت نشده')
+                return redirect('course_list')
         
         if course.remainingCapacity <=0:
             messages.error(request, 'ظرفیت پر شده است')
