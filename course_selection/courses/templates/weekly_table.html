@@ -15,7 +15,6 @@
 <!-- btn for go to courses -->
 <div class="search">
     <a href="{% url 'course_list' %}" class="add-btn">بازگشت به انتخاب واحد</a>
-    <a href="{% url 'weekly_schedule' %}" class="add-btn">مشاهده برنامه هفتگی</a>
     <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}
         <button type="submit" class="add-btn">خروج</button>
