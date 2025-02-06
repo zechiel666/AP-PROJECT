@@ -13,8 +13,8 @@ class CourseListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     login_url = '/login/'  # Redirect to login page if not authenticated
 
     def test_func(self):
-        # Check if the user is a student
-        return self.request.user.user_level == "student"
+        # Ensure only students can access
+        return self.request.user.is_authenticated and self.request.user.user_level == "student" and not self.request.user.is_superuser
 
     def handle_no_permission(self):
         # Redirect to a forbidden page if the user is not authorized
@@ -31,6 +31,10 @@ class CourseListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         course_code_name = request.POST.get('course__code')
         course = Course.objects.get(code=course_code_name)
         user = request.user
+        #if both admins and students were logged in
+        if user.is_superuser:
+            messages.error(request, 'Admins cannot select courses.')
+            return redirect('course_list')
 
         if SelectedCourse.objects.filter(user=user, course=course).exists():
             messages.error(request, 'این درس انتخاب شده است')
