@@ -8,10 +8,18 @@
     <link rel="stylesheet" href="{% static 'teacher/course_management.css' %}">
 </head>
 <body>
-    <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit" class="add-btn">خروج</button>
-    </form>
+    <nav>
+        <ul>
+            <li><a href="{% url 'course_management' %}">مدیریت دروس</a></li>
+            <li><a href="{% url 'user_list' %}">مدیریت دانشجویان و اساتید</a></li>
+            <li><a href="{% url 'add_user' %}">افزودن کاربر جدید</a></li>
+        </ul>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="add-btn">خروج</button>
+        </form>
+    </nav>
+
     <h2 class="page-title">مدیریت دروس</h2>
 
     <!-- Search Form -->

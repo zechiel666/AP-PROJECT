@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>مدیریت کاربران</h2>
+
+<form method="GET">
+    <input type="text" name="q" placeholder="جستجو بر اساس شماره دانشجویی" value="{{ request.GET.q }}">
+    <button type="submit">جستجو</button>
+</form>
+
+<a href="{% url 'add_user' %}">افزودن کاربر جدید</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>نام</th>
+            <th>ایمیل</th>
+            <th>شماره دانشجویی</th>
+            <th>نقش</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.student_number|default:"-" }}</td>
+            <td>{{ user.get_role_display }}</td>
+            <td>
+                <a href="{% url 'edit_user' user.id %}">ویرایش</a>
+                <form method="POST" action="{% url 'delete_user' user.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">حذف</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">هیچ کاربری یافت نشد.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
