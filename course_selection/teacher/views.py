@@ -2,7 +2,7 @@ from django.shortcuts import render , redirect, get_object_or_404
 from django.views.generic import ListView, FormView, UpdateView, CreateView
 from django.contrib import messages
 from courses.models import Course
-from user.models import User
+from user.models import User, SelectedCourse
 from .forms import CourseForm, UserEditForm, UserCreateForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
@@ -75,7 +75,7 @@ class UserListView(LoginRequiredMixin, ListView):
         return users
 
 class UserCreateView(LoginRequiredMixin, CreateView):
-    """Add a new user"""
+    """Add a new user with all necessary fields"""
     model = User
     form_class = UserCreateForm
     template_name = "add_user.html"
@@ -83,8 +83,10 @@ class UserCreateView(LoginRequiredMixin, CreateView):
     login_url = "/login/"
 
     def form_valid(self, form):
+        """Handle password hashing and save the user"""
         user = form.save(commit=False)
-        user.set_password(form.cleaned_data["password"])  # Hash password
+        if form.cleaned_data["password"]:
+            user.set_password(form.cleaned_data["password"])  # Hash password
         user.save()
         messages.success(self.request, "User added successfully!")
         return super().form_valid(form)
@@ -106,8 +108,13 @@ class UserEditView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 def delete_user(request, user_id):
-    """Delete a user"""
     user = get_object_or_404(User, id=user_id)
+    
+    # Delete related SelectedCourse entries first
+    SelectedCourse.objects.filter(user=user).delete()
+    
+    # Now delete the user
     user.delete()
+
     messages.success(request, "User deleted successfully!")
     return redirect("user_list")

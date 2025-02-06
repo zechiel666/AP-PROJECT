@@ -114,7 +114,7 @@ class Teacher(User):
 
 
 class SelectedCourse(models.Model):
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     course = models.ForeignKey('courses.Course', on_delete=models.PROTECT)
 
     class Meta:
