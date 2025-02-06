@@ -12,7 +12,7 @@ class CourseListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     template_name = 'course_list.html'
     context_object_name = 'courses'
     login_url = '/login/'  # Redirect to login page if not authenticated
-
+ 
     def test_func(self):
         # Ensure only students can access
         return self.request.user.is_authenticated and self.request.user.user_level == "student" and not self.request.user.is_superuser

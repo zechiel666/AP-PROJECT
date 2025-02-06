@@ -33,11 +33,12 @@ def custom_login_view(request):
         user = form.get_user()
         login(request, user)
 
+        next_url = request.GET.get('next')  # Get redirection URL
         # Redirect based on user type
         if user.user_level == "student":
             return redirect('/courses/')
         elif user.user_level == "teacher":
-            return redirect("/manage/")  #redirect teachers
+            return redirect(next_url if next_url else "/manage/")  # Redirect teachers
 
         messages.error(request, "Invalid student number or password.")
 

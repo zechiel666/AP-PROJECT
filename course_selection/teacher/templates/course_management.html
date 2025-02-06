@@ -8,7 +8,10 @@
     <link rel="stylesheet" href="{% static 'teacher/course_management.css' %}">
 </head>
 <body>
-
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="add-btn">خروج</button>
+    </form>
     <h2 class="page-title">مدیریت دروس</h2>
 
     <!-- Search Form -->
