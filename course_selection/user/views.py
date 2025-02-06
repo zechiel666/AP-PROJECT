@@ -17,8 +17,8 @@ def register(request):
 
             # Redirect based on user level
             if user.user_level == 'teacher':
-                return redirect('#')  # add later
-            return redirect('/courses/')  # Redirect students
+                return redirect('/manage/')  # redirect teachers
+            return redirect('/courses/')  # redirect students
 
     else:
         form = UserCreationForm()
@@ -37,7 +37,7 @@ def custom_login_view(request):
         if user.user_level == "student":
             return redirect('/courses/')
         elif user.user_level == "teacher":
-            return redirect("#")  #add later
+            return redirect("/manage/")  #redirect teachers
 
         messages.error(request, "Invalid student number or password.")
 

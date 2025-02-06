@@ -5,3 +5,4 @@ urlpatterns = [
     path('manage/', course_management, name='course_management'),
     path('delete/<int:course_id>/', delete_course, name='delete_course'),
 ]
+ 

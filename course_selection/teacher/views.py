@@ -1,23 +1,15 @@
-from django.shortcuts import render
-from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect
-from django.shortcuts import render , redirect
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views import View
-from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render , redirect, get_object_or_404
 from django.contrib import messages
-from courses.models import Course, Department
+from courses.models import Course
 from .forms import CourseForm
 
-class TeacherDashboardView(LoginRequiredMixin, View):
-    def get(self, request):
-        if not request.user.is_teacher:  
-            return redirect('/select-courses/')  
-
-        return render(request, 'teacher_dashboard.html')
+def is_teacher(user):
+    return user.is_authenticated and hasattr(user, 'is_teacher') and user.is_teacher
     
-
-def course_management(request):
+@login_required(login_url='/login/')  # Redirects to the correct login page
+@user_passes_test(is_teacher, login_url='/login/')
+def course_management(request): 
     query = request.GET.get("q", "")
     courses = Course.objects.all()
     
