@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Management</title>
+</head>
+<body>
+<h2>Course Management</h2>
+
+<!-- Search Form -->
+<form method="GET">
+    <input type="text" name="q" placeholder="Search by code, name, or department" value="{{ query }}">
+    <button type="submit">Search</button>
+</form>
+
+<!-- Add Course Form -->
+<h3>Add New Course</h3>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Course</button>
+</form>
+
+<!-- Course List -->
+<h3>All Courses</h3>
+<table>
+    <tr>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Instructor</th>
+        <th>Actions</th>
+    </tr>
+    {% for course in courses %}
+    <tr>
+        <td>{{ course.code }}</td>
+        <td>{{ course.name }}</td>
+        <td>{{ course.department.name }}</td>
+        <td>{{ course.instructor.name }}</td>
+        <td>
+            <form method="POST" action="{% url 'delete_course' course.id %}">
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">No courses found.</td></tr>
+    {% endfor %}
+</table>
+</body>
+</html>

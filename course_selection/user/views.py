@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
-from django.contrib import messages , 
+from django.contrib import messages 
 from .forms import *
 from .models import User
 
@@ -37,9 +37,7 @@ def custom_login_view(request):
         if user.user_level == "student":
             return redirect('/courses/')
         elif user.user_level == "teacher":
-            return redirect("/admin/")  #add later
-        else:
-            return redirect("default_dashboard")
+            return redirect("#")  #add later
 
         messages.error(request, "Invalid student number or password.")
 
